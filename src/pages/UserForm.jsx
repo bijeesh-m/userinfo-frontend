@@ -29,11 +29,12 @@ const UserForm = () => {
       axios
         .post("/user/postuserinfo", userdetails)
         .then((res) => {
-          navigate("/viewform");
+          
         })
         .catch((err) => {
           console.log(err);
         });
+      navigate("/viewform")
       
     } else {
       alert("add subjects");
