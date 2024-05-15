@@ -7,19 +7,28 @@ const ViewForm = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3005/user/getuserinfo")
+      .get("/user/getuserinfo")
       .then((res) => {
         setUserInfo(res.data.userinfo);
-        console.log(res.data?.userinfo);
+        setFilteredData(res.data.userinfo);
       })
       .catch((err) => {
         alert("error");
       });
   }, []);
+
+  const handleSearch = (e) => {
+    const filteredData = userInfo.filter((ele) =>
+      ele.university.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredData(filteredData);
+  };
+
   return (
     <div className=" flex justify-center flex-col w-full items-center">
       <input
         type="text"
+        onChange={handleSearch}
         placeholder=" Search by unniversity "
         className=" border px-4 mt-11"
       />
@@ -34,21 +43,22 @@ const ViewForm = () => {
           </tr>
         </thead>
         <tbody>
-          {userInfo?.map((user) => {
-            return (
-              <tr>
-                <td>{user.name}</td>
-                <td>
-                  {user?.subjects?.map((sub) => {
-                    return <p>{sub}</p>;
-                  })}
-                </td>
-                <td>{user.university}</td>
-                <td>{user.DOB}</td>
-                <td>{user.rating}</td>
-              </tr>
-            );
-          })}
+          {userInfo &&
+            filteredData?.map((user) => {
+              return (
+                <tr>
+                  <td>{user.name}</td>
+                  <td>
+                    {user?.subjects?.map((sub) => {
+                      return <p>{sub}</p>;
+                    })}
+                  </td>
+                  <td>{user.university}</td>
+                  <td>{user.DOB}</td>
+                  <td>{user.rating}</td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

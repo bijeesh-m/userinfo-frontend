@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
-
 const UserForm = () => {
   const [date, setDate] = useState("");
   const [month, setMonth] = useState("");
@@ -12,10 +11,9 @@ const UserForm = () => {
     name: "",
     subjects: [],
     university: "",
-    DOB: `${date}-${month}-${year}`,
     rating: 1,
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleAddSubjects = () => {
     if (subject) {
       setUserdetails({
@@ -27,20 +25,19 @@ const UserForm = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userdetails.subjects.length > 0){
-        axios
-        .post("http://localhost:3005/user/postuserinfo", userdetails)
+    if (userdetails.subjects.length > 0) {
+      axios
+        .post("/user/postuserinfo", userdetails)
         .then((res) => {
           console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
-        navigate('/viewform')
-    }else{
-        alert("add subjects")
+      navigate("/viewform");
+    } else {
+      alert("add subjects");
     }
-      
   };
   return (
     <div className="   flex justify-center  pt-10">
